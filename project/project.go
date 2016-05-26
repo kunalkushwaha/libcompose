@@ -563,7 +563,7 @@ func (p *Project) startService(wrappers map[string]*serviceWrapper, history []st
 
 			continue
 		}
-
+		log.Println("-- This could be final start ?")
 		err := p.startService(wrappers, history, selected, launched, target, action, cycleAction)
 		if err != nil {
 			return err
@@ -608,9 +608,10 @@ func (p *Project) traverse(start bool, selected map[string]bool, wrappers map[st
 	}
 
 	launched := map[string]bool{}
-
+	log.Println("Somehow starting service ??")
 	for _, wrapper := range wrappers {
 		if err := p.startService(wrappers, []string{}, selected, launched, wrapper, action, cycleAction); err != nil {
+			log.Println("Error hai bhi error hai!!")
 			return err
 		}
 	}

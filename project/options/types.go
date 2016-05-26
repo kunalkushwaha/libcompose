@@ -25,6 +25,7 @@ type Create struct {
 	NoRecreate    bool
 	ForceRecreate bool
 	NoBuild       bool
+	AbortOnExit   bool
 	// ForceBuild bool
 }
 

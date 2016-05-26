@@ -132,6 +132,7 @@ func ProjectUp(p project.APIProject, c *cli.Context) error {
 			NoRecreate:    c.Bool("no-recreate"),
 			ForceRecreate: c.Bool("force-recreate"),
 			NoBuild:       c.Bool("no-build"),
+			AbortOnExit:   c.Bool("abort-on-container-exit"),
 		},
 	}
 	err := p.Up(options, c.Args()...)

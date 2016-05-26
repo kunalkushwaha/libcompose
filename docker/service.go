@@ -56,19 +56,19 @@ func (s *Service) Create(options options.Create) error {
 	if err != nil {
 		return err
 	}
-
+	logrus.Info("EnsureImages...")
 	imageName, err := s.ensureImageExists(options.NoBuild)
 	if err != nil {
 		return err
 	}
-
+	logrus.Info("Search and Recreate")
 	if len(containers) != 0 {
 		return s.eachContainer(func(c *Container) error {
 			return s.recreateIfNeeded(imageName, c, options.NoRecreate, options.ForceRecreate)
 		})
 	}
-
-	_, err = s.createOne(imageName)
+	logrus.Info("create one ?? ")
+	//_, err = s.createOne(imageName)
 	return err
 }
 
@@ -211,7 +211,7 @@ func (s *Service) Up(options options.Up) error {
 	if err != nil {
 		return err
 	}
-
+	logrus.Info("-------------- Up in service ------------")
 	var imageName = s.imageName()
 	if len(containers) == 0 || !options.NoRecreate {
 		imageName, err = s.ensureImageExists(options.NoBuild)
@@ -220,7 +220,12 @@ func (s *Service) Up(options options.Up) error {
 		}
 	}
 
-	return s.up(imageName, true, options)
+	err = s.up(imageName, true, options)
+	if err != nil {
+		logrus.Error("Failed to start the service : ", err)
+	}
+	return err
+	//return s.up(imageName, true, options)
 }
 
 // Run implements Service.Run. It runs a one of command within the service container.
